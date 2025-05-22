@@ -1,0 +1,4 @@
+[submodule "etl"]
+	path = etl
+	url = https://github.com/ETLCPP/etl.git
+	branch = master
