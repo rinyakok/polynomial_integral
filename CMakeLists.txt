@@ -18,3 +18,35 @@ set_target_properties(IntegratorLib PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
 )
+
+#=================================================== Unit Tests =========================================================
+
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
+
+enable_testing()
+
+file(GLOB_RECURSE TEST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp")
+
+add_executable(IntegratorUnitTests ${TEST_SOURCES})
+
+target_include_directories(IntegratorUnitTests PRIVATE 
+    ${gtest_SOURCE_DIR}/include
+    $<TARGET_PROPERTY:IntegratorLib,INCLUDE_DIRECTORIES>
+)
+
+target_link_libraries(IntegratorUnitTests
+    PRIVATE
+        IntegratorLib
+        gtest
+        gtest_main
+)
+
+add_test(NAME IntegratorUnitTests COMMAND IntegratorUnitTests)
+
