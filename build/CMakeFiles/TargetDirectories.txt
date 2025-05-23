@@ -1,0 +1,3 @@
+D:/Workset/polynomial_integral/build/CMakeFiles/IntegratorLib.dir
+D:/Workset/polynomial_integral/build/CMakeFiles/edit_cache.dir
+D:/Workset/polynomial_integral/build/CMakeFiles/rebuild_cache.dir
