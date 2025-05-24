@@ -17,6 +17,10 @@ target_include_directories(IntegratorLib PRIVATE
 set_target_properties(IntegratorLib PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED YES
+    ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build/output/lib/release
+    LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/build/output/lib/release
+    ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build/output/lib/debug
+    LIBRARY_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/build/output/lib/debug
 )
 
 #===================================== Build Type =====================================
@@ -59,8 +63,19 @@ target_link_options(IntegratorLib PRIVATE
 
 #=======================================================================================
 
-#=================================================== Unit Tests =========================================================
+#=================================== Custom Commands ==================================
+# Custom target to clean and copy headers after build
+add_custom_target(copy_headers ALL
+    COMMAND ${CMAKE_COMMAND} -E rm -rf ${CMAKE_CURRENT_SOURCE_DIR}/build/output/include
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/integrator/include ${CMAKE_CURRENT_SOURCE_DIR}/build/output/include
+    COMMENT "Updating output/include with latest headers"
+)
 
+# Run copy_headers after IntegratorLib is built
+add_dependencies(copy_headers IntegratorLib)
+
+
+#=================================== Unit Tests ========================================
 include(FetchContent)
 FetchContent_Declare(
   googletest
@@ -79,6 +94,10 @@ add_executable(IntegratorUnitTests ${TEST_SOURCES})
 target_include_directories(IntegratorUnitTests PRIVATE 
     ${gtest_SOURCE_DIR}/include
     $<TARGET_PROPERTY:IntegratorLib,INCLUDE_DIRECTORIES>
+)
+
+set_target_properties(IntegratorUnitTests PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests/bin
 )
 
 target_link_libraries(IntegratorUnitTests

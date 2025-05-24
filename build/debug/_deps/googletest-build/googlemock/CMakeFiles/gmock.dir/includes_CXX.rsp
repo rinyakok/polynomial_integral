@@ -1,0 +1,1 @@
+-I"D:/Workset/polynomial_integral/build/debug/_deps/googletest-src/googlemock/include" -I"D:/Workset/polynomial_integral/build/debug/_deps/googletest-src/googlemock" -isystem "D:/Workset/polynomial_integral/build/debug/_deps/googletest-src/googletest/include" -isystem "D:/Workset/polynomial_integral/build/debug/_deps/googletest-src/googletest"

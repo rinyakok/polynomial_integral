@@ -1,2 +1,0 @@
-D:\msys64\ucrt64\bin\ar.exe qc libIntegratorLib.a CMakeFiles/IntegratorLib.dir/Integrator/source/integrator.cpp.obj
-D:\msys64\ucrt64\bin\ranlib.exe libIntegratorLib.a
